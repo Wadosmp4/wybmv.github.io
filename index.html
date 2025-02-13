@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0; /* Reset default margin */
+            padding: 0; /* Reset default padding */
+            background-color: pink;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            margin-top: -50px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.4s ease-in-out;
+        }
+        .yes {
+            background: red;
+            color: white;
+        }
+        .no {
+            background: lightgray;
+            color: black;
+            position: relative;
+        }
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Floating hearts */
+        .heart {
+            position: absolute;
+            width: 100px; /* Default size */
+            height: 100px; /* Default size */
+            background: url('gradient_heart.png') no-repeat center center / contain;
+            animation: floatUp 5s linear infinite;
+            bottom: -50px; /* Start below the screen */
+        }
+
+        /* Floating flowers */
+        .pinkFlower {
+            position: absolute;
+            width: 100px; /* Default size */
+            height: 100px; /* Default size */
+            background: url('pink_flower.png') no-repeat center center / contain;
+            animation: floatUp 5s linear infinite;
+            bottom: -50px; /* Start below the screen */
+        }
+
+                /* Floating flowers */
+        .redFlower {
+            position: absolute;
+            width: 100px; /* Default size */
+            height: 100px; /* Default size */
+            background: url('red_flower_2.png') no-repeat center center / contain;
+            animation: floatUp 5s linear infinite;
+            bottom: -50px; /* Start below the screen */
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(var(--rotate-start)); /* Start at the bottom */
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-120vh) rotate(var(--rotate-end)); /* Move to the top */
+                opacity: 0.4;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="question-box">
+        <img src="start_cat.png" width="200" height="200">
+        <h1>Mariia 🌸</h1>
+        <h2>Will you be my Valentine? 💖</h2>
+        <div class="buttons">
+            <button class="yes" onclick="acceptLove()">Yes! ❤️</button>
+            <button class="no" onclick="refuseLove()" onmouseover="moveNoButton()" >No 😢</button>
+        </div>
+    </div>
+    <audio id="yesSound" src="yaay.mp3"></audio>
+    <audio id="noSound" src="sad_trombone.mp3"></audio>
+
+    <script>
+        function acceptLove() {
+            const responses = [
+                ['Yaaaaay! 💖️', 'I’m floating on clouds right now! ☁️'],
+                ['OMG! 😍', 'This is the best moment of my life! 🎉'],
+                ['Woohoo! 🎉', 'You have made my day 🚀❤️']
+            ];
+
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            document.getElementById('question-box').innerHTML = `
+                <img class="fade-in" src="happy_cat.png" width="200" height="200">
+                <h1 class="fade-in">${randomResponse[0]}</h1>
+                <p class="fade-in">${randomResponse[1]}</p>`;
+
+            document.getElementById('yesSound').play();
+        }
+
+        function refuseLove() {
+            document.getElementById('question-box').innerHTML = '' +
+                '<img class="fade-in" src="sad_cat.jpg" width="200" height="260">' +
+                '<h1 class="fade-in">Aww, no? 😿💔️</h1>' +
+                '<p class="fade-in">Well, I’ll just be over here hugging my pillow... 🧸💖</p>' +
+                '';
+
+            document.getElementById('noSound').play();
+        }
+
+        let hoverCount = 0;
+
+        function moveNoButton() {
+            let button = document.querySelector('.no');
+            let maxX = window.innerWidth - button.offsetWidth - 20;
+            let maxY = window.innerHeight - button.offsetHeight - 20;
+
+            let x = Math.random() * maxX;
+            let y = Math.random() * maxY;
+
+            // Ensure it stays visible and doesn't overlap other elements
+            button.style.position = "absolute"; // Required for movement
+            button.style.left = `${Math.max(10, Math.min(x, maxX))}px`;
+            button.style.top = `${Math.max(10, Math.min(y, maxY))}px`;
+
+            hoverCount++;
+
+            if (hoverCount === 10){
+                document.getElementById('question-box').innerHTML = '' +
+                '<img class="fade-in" src="why_cat.jpg" width="200" height="200">' +
+                '<h2 class="fade-in">Are you really trying this hard</h2>' +
+                '<h2 class="fade-in">to click "No"? 😜️️</h2>' +
+                '<h2 class="fade-in">Will you be my Valentine? 💖</h2>\n' +
+                '<div class="buttons fade-in">\n' +
+                '    <button class="yes fade-in" onclick="acceptLove()">Yes! ❤️</button>\n' +
+                '    <button class="no fade-in" onclick="refuseLove()" onmouseover="moveNoButton()" >No 😢</button>\n' +
+                '</div>';
+                moveNoButton();
+            }
+        }
+
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+
+            // Randomize starting position and size
+            const size = Math.random() * 100 + (window.innerWidth * 0.015) + 20; // Random size between 100px and 200px
+            const leftPosition = Math.random() * window.innerWidth; // Random horizontal position
+            const rotateStart = Math.random() * 180;
+            const rotateEnd = rotateStart + 360;
+
+            heart.style.width = `${size}px`;
+            heart.style.height = `${size}px`;
+            heart.style.left = `${leftPosition}px`;
+
+            heart.style.setProperty('--rotate-start', `${rotateStart}deg`);
+            heart.style.setProperty('--rotate-end', `${rotateEnd}deg`);
+
+            document.body.appendChild(heart);
+
+            // Remove the heart after the animation ends to avoid clutter
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        function createPinkFlower() {
+            const flower = document.createElement('div');
+            flower.className = 'pinkFlower';
+
+            // Randomize starting position and size
+            const size = Math.random() * 100 + (window.innerWidth * 0.015) + 20; // Random size between 100px and 200px
+            const leftPosition = Math.random() * window.innerWidth; // Random horizontal position
+            const rotateStart = Math.random() * 180;
+            const rotateEnd = rotateStart + 360;
+
+            flower.style.width = `${size}px`;
+            flower.style.height = `${size}px`;
+            flower.style.left = `${leftPosition}px`;
+
+            flower.style.setProperty('--rotate-start', `${rotateStart}deg`);
+            flower.style.setProperty('--rotate-end', `${rotateEnd}deg`);
+
+            document.body.appendChild(flower);
+
+            // Remove the heart after the animation ends to avoid clutter
+            setTimeout(() => {
+                flower.remove();
+            }, 5000);
+        }
+
+        function createRedFlower() {
+            const flower = document.createElement('div');
+            flower.className = 'redFlower';
+
+            // Randomize starting position and size
+            const size = Math.random() * 100 + (window.innerWidth * 0.015) + 20; // Random size between 100px and 200px
+            const leftPosition = Math.random() * window.innerWidth; // Random horizontal position
+            const rotateStart = Math.random() * 180;
+            const rotateEnd = rotateStart + 360;
+
+            flower.style.width = `${size}px`;
+            flower.style.height = `${size}px`;
+            flower.style.left = `${leftPosition}px`;
+
+            flower.style.setProperty('--rotate-start', `${rotateStart}deg`);
+            flower.style.setProperty('--rotate-end', `${rotateEnd}deg`);
+
+            document.body.appendChild(flower);
+
+            // Remove the heart after the animation ends to avoid clutter
+            setTimeout(() => {
+                flower.remove();
+            }, 5000);
+        }
+
+        function startFloatingElements() {
+            setInterval(createFloatingHeart, 500); // Create a new heart every 500ms
+            setInterval(createPinkFlower, 500); // Create a new heart every 500ms
+            setInterval(createRedFlower, 500); // Create a new heart every 500ms
+        }
+
+        // Start floating hearts when the page loads
+        window.onload = startFloatingElements;
+    </script>
+</body>
+</html>
