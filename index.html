@@ -78,7 +78,7 @@
             bottom: -50px; /* Start below the screen */
         }
 
-                /* Floating flowers */
+        /* Floating flowers */
         .redFlower {
             position: absolute;
             width: 100px; /* Default size */
@@ -151,7 +151,7 @@
             let y = Math.random() * maxY;
 
             // Ensure it stays visible and doesn't overlap other elements
-            button.style.position = "absolute"; // Required for movement
+            button.style.position = "absolute";
             button.style.left = `${Math.max(10, Math.min(x, maxX))}px`;
             button.style.top = `${Math.max(10, Math.min(y, maxY))}px`;
 
@@ -176,8 +176,8 @@
             heart.className = 'heart';
 
             // Randomize starting position and size
-            const size = Math.random() * 100 + (window.innerWidth * 0.015) + 20; // Random size between 100px and 200px
-            const leftPosition = Math.random() * window.innerWidth; // Random horizontal position
+            const size = Math.random() * 100 + (window.innerWidth * 0.015) + 20;
+            const leftPosition = Math.random() * window.innerWidth;
             const rotateStart = Math.random() * 180;
             const rotateEnd = rotateStart + 360;
 
@@ -190,7 +190,6 @@
 
             document.body.appendChild(heart);
 
-            // Remove the heart after the animation ends to avoid clutter
             setTimeout(() => {
                 heart.remove();
             }, 5000);
@@ -201,8 +200,8 @@
             flower.className = 'pinkFlower';
 
             // Randomize starting position and size
-            const size = Math.random() * 100 + (window.innerWidth * 0.015) + 20; // Random size between 100px and 200px
-            const leftPosition = Math.random() * window.innerWidth; // Random horizontal position
+            const size = Math.random() * 100 + (window.innerWidth * 0.015) + 20;
+            const leftPosition = Math.random() * window.innerWidth;
             const rotateStart = Math.random() * 180;
             const rotateEnd = rotateStart + 360;
 
@@ -215,7 +214,6 @@
 
             document.body.appendChild(flower);
 
-            // Remove the heart after the animation ends to avoid clutter
             setTimeout(() => {
                 flower.remove();
             }, 5000);
@@ -226,8 +224,8 @@
             flower.className = 'redFlower';
 
             // Randomize starting position and size
-            const size = Math.random() * 100 + (window.innerWidth * 0.015) + 20; // Random size between 100px and 200px
-            const leftPosition = Math.random() * window.innerWidth; // Random horizontal position
+            const size = Math.random() * 100 + (window.innerWidth * 0.015) + 20;
+            const leftPosition = Math.random() * window.innerWidth;
             const rotateStart = Math.random() * 180;
             const rotateEnd = rotateStart + 360;
 
@@ -240,19 +238,17 @@
 
             document.body.appendChild(flower);
 
-            // Remove the heart after the animation ends to avoid clutter
             setTimeout(() => {
                 flower.remove();
             }, 5000);
         }
 
         function startFloatingElements() {
-            setInterval(createFloatingHeart, 500); // Create a new heart every 500ms
-            setInterval(createPinkFlower, 500); // Create a new heart every 500ms
-            setInterval(createRedFlower, 500); // Create a new heart every 500ms
+            setInterval(createFloatingHeart, 500);
+            setInterval(createPinkFlower, 500);
+            setInterval(createRedFlower, 500);
         }
 
-        // Start floating hearts when the page loads
         window.onload = startFloatingElements;
     </script>
 </body>
