@@ -127,7 +127,9 @@
                 <h1 class="fade-in">${randomResponse[0]}</h1>
                 <p class="fade-in">${randomResponse[1]}</p>`;
 
-            document.getElementById('yesSound').play();
+            const sound = document.getElementById('yesSound');
+            audio.volume = 0.4;
+            audio.play();
         }
 
         function refuseLove() {
@@ -137,7 +139,9 @@
                 '<p class="fade-in">Well, I’ll just be over here hugging my pillow... 🧸💖</p>' +
                 '';
 
-            document.getElementById('noSound').play();
+            const sound = document.getElementById('noSound');
+            audio.volume = 0.4;
+            audio.play();
         }
 
         let hoverCount = 0;
